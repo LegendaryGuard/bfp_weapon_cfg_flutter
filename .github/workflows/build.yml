@@ -44,19 +44,6 @@ jobs:
     - name: Run tests
       run: flutter test
 
-    # Android
-    - name: Build Android APK
-      if: matrix.os == 'ubuntu-latest'
-      run: flutter build apk --release
-
-    - name: Upload Android APK
-      if: matrix.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v4
-      with:
-        name: android-apk
-        path: build/app/outputs/flutter-apk/app-release.apk
-
-
     # Windows
     - name: Build Windows executable
       if: matrix.os == 'windows-latest'
@@ -82,10 +69,11 @@ jobs:
         name: linux-bundle
         path: build/linux/x64/release/bundle/**
 
+
     # Web
     - name: Enable web support
       if: matrix.os == 'ubuntu-latest'
-      run: flutter config --enable-web --pwa-strategy none
+      run: flutter config --enable-web
 
     - name: Build Flutter Web
       if: matrix.os == 'ubuntu-latest'
@@ -97,6 +85,20 @@ jobs:
       with:
         name: web-build
         path: build/web/**
+
+
+    # Android
+    - name: Build Android APK
+      if: matrix.os == 'ubuntu-latest'
+      run: flutter build apk --release
+
+    - name: Upload Android APK
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
+
 
     # macOS
     - name: Build macOS app
