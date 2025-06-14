@@ -76,7 +76,7 @@ class _BlinkTextState extends State<BlinkText>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _ctrl,
-      builder: (_, __) {
+      builder: (_, _) {
         // Instant switch halfway through each cycle
         final color = _ctrl.value < 0.5 ? widget.fromColor : widget.toColor;
         return Text(
