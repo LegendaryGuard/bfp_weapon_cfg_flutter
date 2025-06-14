@@ -49,12 +49,19 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: flutter build windows --release
 
-    - name: Upload Windows executable
+    - name: Package Windows release
+      if: matrix.os == 'windows-latest'
+      run: |
+        mkdir windows_release
+        cp -r build/windows/x64/runner/Release/* windows_release/
+        7z a -r windows_release.zip windows_release/*
+      
+    - name: Upload Windows release
       if: matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v4
       with:
-        name: windows-exe
-        path: build/windows/x64/runner/Release/*.exe
+        name: windows-release
+        path: windows_release.zip
 
 
     # Linux
@@ -62,12 +69,19 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: flutter build linux --release
 
+    - name: Package Linux bundle
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        mkdir linux_release
+        cp -r build/linux/x64/release/bundle/* linux_release/
+        tar -czvf linux_release.tar.gz linux_release
+      
     - name: Upload Linux bundle
       if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v4
       with:
-        name: linux-bundle
-        path: build/linux/x64/release/bundle/**
+        name: linux-release
+        path: linux_release.tar.gz
 
 
     # Web
@@ -79,12 +93,19 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: flutter build web --release
 
+    - name: Package Web build
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        mkdir web_release
+        cp -r build/web/* web_release/
+        zip -r web_release.zip web_release
+      
     - name: Upload Web build
       if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v4
       with:
-        name: web-build
-        path: build/web/**
+        name: web-release
+        path: web_release.zip
 
 
     # Android
@@ -105,9 +126,16 @@ jobs:
       if: matrix.os == 'macos-latest'
       run: flutter build macos --release
 
-    - name: Upload macOS app
+    - name: Package macOS app
+      if: matrix.os == 'macos-latest'
+      run: |
+        mkdir macos_release
+        cp -r build/macos/Build/Products/Release/*.app macos_release/
+        zip -r macos_release.zip macos_release
+      
+    - name: Upload macOS release
       if: matrix.os == 'macos-latest'
       uses: actions/upload-artifact@v4
       with:
-        name: macos-app
-        path: build/macos/Build/Products/Release/*.app
+        name: macos-release
+        path: macos_release.zip
