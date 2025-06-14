@@ -1,6 +1,6 @@
 name: bfp_weapon_cfg_flutter
 description: "bfp_weapon.cfg editor. For the ancient legendary Quake 3 mod, Bid For Power"
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/LegendaryGuard/bfp_weapon_cfg_flutter
 
 environment:

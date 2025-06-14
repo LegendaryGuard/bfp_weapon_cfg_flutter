@@ -30,33 +30,61 @@ class _WeaponEditorScreenState extends State<WeaponEditorScreen> {
   List<Weapon> weapons = [];
   String? currentFile;
 
-  late FocusNode weaponNumFocus;
-  TextEditingController? _weaponNumController;
-  Weapon? _weaponNumWeapon;
+  // Use a map to store controllers for each weapon
+  final Map<Weapon, TextEditingController> weaponNumControllers = {};
+  final Map<Weapon, FocusNode> weaponNumFocusNodes = {};
 
   @override
   void initState() {
     super.initState();
-    weaponNumFocus = FocusNode();
-    weaponNumFocus.addListener(_onWeaponNumFocusChange);
   }
 
   @override
   void dispose() {
-    weaponNumFocus.removeListener(_onWeaponNumFocusChange);
-    weaponNumFocus.dispose();
-    _weaponNumController?.dispose();
+    // Dispose all controllers and focus nodes
+    for (final controller in weaponNumControllers.values) {
+      controller.dispose();
+    }
+    for (final focusNode in weaponNumFocusNodes.values) {
+      focusNode.dispose();
+    }
     super.dispose();
   }
 
-  void _onWeaponNumFocusChange() {
-    if (!weaponNumFocus.hasFocus && _weaponNumController != null && _weaponNumWeapon != null) {
+  void _initControllersForWeapons() {
+    // Clear existing controllers
+    for (final controller in weaponNumControllers.values) {
+      controller.dispose();
+    }
+    for (final focusNode in weaponNumFocusNodes.values) {
+      focusNode.dispose();
+    }
+    weaponNumControllers.clear();
+    weaponNumFocusNodes.clear();
+
+    // Create new controllers and focus nodes for each weapon
+    for (final weapon in weapons) {
+      weaponNumControllers[weapon] = TextEditingController(
+        text: weapon.weaponNum?.toString() ?? '',
+      );
+      weaponNumFocusNodes[weapon] = FocusNode()
+        ..addListener(() {
+          if (!weaponNumFocusNodes[weapon]!.hasFocus) {
+            _onWeaponNumFocusChange(weapon);
+          }
+        });
+    }
+  }
+
+  void _onWeaponNumFocusChange(Weapon weapon) {
+    final controller = weaponNumControllers[weapon];
+    if (controller != null) {
       checkWeaponNum(
         context: context,
         weapons: weapons,
-        value: _weaponNumController!.text,
-        w: _weaponNumWeapon!,
-        weaponNumController: _weaponNumController,
+        value: controller.text,
+        w: weapon,
+        weaponNumController: controller,
         setStateCallback: (fn) => setState(fn),
       );
     }
@@ -78,6 +106,7 @@ class _WeaponEditorScreenState extends State<WeaponEditorScreen> {
         setState(() {
           currentFile = path;
           weapons = parseCfg(path);
+          _initControllersForWeapons();
         });
       } else {
         // Show error for invalid file selection
@@ -157,8 +186,9 @@ class _WeaponEditorScreenState extends State<WeaponEditorScreen> {
       }
     }
   }
+
   @override
-  Widget build(BuildContext c) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFA6E06),
@@ -184,12 +214,15 @@ class _WeaponEditorScreenState extends State<WeaponEditorScreen> {
             IconButton(
               icon: Icon(Icons.add),
               tooltip: 'Add new weapon',
-              onPressed: () => showAddWeaponDialog(
-                context: context,
-                weapons: weapons,
-                isDarkMode: widget.isDarkMode,
-                setStateCallback: (fn) => setState(fn),
-              ),
+              onPressed: () async {
+                await showAddWeaponDialog(
+                  context: context,
+                  weapons: weapons,
+                  isDarkMode: widget.isDarkMode,
+                  setStateCallback: (fn) => setState(fn),
+                );
+                _initControllersForWeapons();
+              },
             ),
           IconButton(
             onPressed: _load,
@@ -327,18 +360,17 @@ class _WeaponEditorScreenState extends State<WeaponEditorScreen> {
                           isAttackType: isAttackType,
                           // special handling for weaponNum
                           controller: key == 'weaponNum' 
-                              ? (_weaponNumController ??= TextEditingController(
-                                  text: w.weaponNum?.toString() ?? ''))
+                              ? weaponNumControllers[w]
                               : null,
-                          focusNode: key == 'weaponNum' ? weaponNumFocus : null,
+                          focusNode: key == 'weaponNum' 
+                              ? weaponNumFocusNodes[w]
+                              : null,
                           onWeaponNumCheck: (value, weapon) => checkWeaponNum(
                             context: context,
                             weapons: weapons,
                             value: value,
                             w: weapon,
-                            weaponNumController: key == 'weaponNum' 
-                                ? _weaponNumController 
-                                : null,
+                            weaponNumController: weaponNumControllers[w],
                             setStateCallback: (fn) => setState(fn),
                           ),
                         ),
