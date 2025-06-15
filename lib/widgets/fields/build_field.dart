@@ -32,11 +32,13 @@ class _BuildFieldState extends State<BuildField> {
   late TextEditingController _controller;
   late FocusNode _focusNode;
   late bool _isWeaponNum;
+  late bool _isPriority;
 
   @override
   void initState() {
     super.initState();
     _isWeaponNum = widget.keyName == 'weaponNum';
+    _isPriority = widget.keyName == 'priority';
     
     // Use provided controller or create new one
     _controller = widget.controller ?? TextEditingController(
@@ -106,6 +108,28 @@ class _BuildFieldState extends State<BuildField> {
             onChanged: (b) => setState(() => widget.w.properties[key] = b ? '1' : '0'),
           ),
         ],
+      );
+    }
+
+    // Priority dropdown
+    if (_isPriority) {
+      return DropdownButtonFormField<int>(
+        value: int.tryParse(widget.w.properties[key] ?? '0 = none') ?? 0,
+        items: const [
+          DropdownMenuItem(value: 0, child: Text('0 = none')),
+          DropdownMenuItem(value: 1, child: Text('1 = beam')),
+          DropdownMenuItem(value: 2, child: Text('2 = forcefield')),
+        ],
+        onChanged: (v) {
+          if (v != null) {
+            setState(() => widget.w.properties[key] = v.toString());
+          }
+        },
+        decoration: InputDecoration(
+          labelText: key,
+          border: const OutlineInputBorder(),
+          isDense: true,
+        ),
       );
     }
 
