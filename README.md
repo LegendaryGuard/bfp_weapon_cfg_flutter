@@ -12,6 +12,14 @@ A modern GUI editor for `bfp_weapon.cfg` and `bfp_weapon2.cfg` files used in the
 - Dark/Light mode support
 - Cross-platform support (Windows, Linux, macOS, Android, Web)
 
+## Screenshots
+<img src="https://github.com/user-attachments/assets/981a961e-ff8a-489f-85a1-8e8bedf82069" width=500 />
+<img src="https://github.com/user-attachments/assets/fd761b31-7ae3-4908-a129-8a5a999397d9" width=500 />
+<img src="https://github.com/user-attachments/assets/14642fcb-4612-4ea0-a81d-08a6a4dbfc15" width=500 />
+<img src="https://github.com/user-attachments/assets/18911f48-10c4-426b-9036-a5a8d67d6acc" width=500 />
+<img src="https://github.com/user-attachments/assets/f2bd3b45-4f40-42d0-8b64-0da0d3b176d5" width=500 />
+
+
 ## Getting Started
 
 ### Prerequisites
@@ -74,7 +82,7 @@ flutter build macos --release
 
 ### Web
 ```sh
-flutter config --enable-web --pwa-strategy none
+flutter config --enable-web
 flutter build web --release
 ```
 
