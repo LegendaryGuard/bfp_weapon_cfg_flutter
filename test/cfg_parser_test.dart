@@ -5,9 +5,9 @@ import 'package:bfp_weapon_cfg_flutter/logic/cfg_parser.dart';
 
 void main() {
   test('parseCfg should split blocks and read properties', () {
-    // create a temporary .cfg file
+    // create a temporary bfp_weapon.cfg file
     final tempDir = Directory.systemTemp.createTempSync();
-    final file = File('${tempDir.path}/sample.cfg');
+    final file = File('${tempDir.path}/bfp_weapon.cfg');
 file.writeAsStringSync('''
 (beam_weapon)
 weaponNum 42

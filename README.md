@@ -27,7 +27,7 @@ A modern GUI editor for `bfp_weapon.cfg` and `bfp_weapon2.cfg` files used in the
 - Dart SDK (version 3.3.0 or higher)
 - Flutter SDK (version 3.19.0 or higher) _(I highly recommend FVM to manage Flutter SDK versions and it's better handled)_
 
-### Installation
+### Installation from source code
 1. Clone the repository
 2. Install dependencies:
 ```sh
@@ -41,7 +41,7 @@ flutter run
 ## Usage
 1. Load a config file:
     - Click the folder icon in the top-right corner
-    - Select either bfp_weapon.cfg or bfp_weapon2.cfg
+    - Select either `bfp_weapon.cfg` or `bfp_weapon2.cfg`
 
 2. Edit weapons:
     - Expand any weapon to view its properties
