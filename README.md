@@ -1,23 +1,22 @@
-# Bid For Power Weapon Config Editor
+# Bid For Power Weapon & Attack Set Config Editor
 
-A modern GUI editor for `bfp_weapon.cfg` and `bfp_weapon2.cfg` files used in the ancient Quake 3 mod **Bid For Power**. Built with Flutter for cross-platform compatibility.
+A modern GUI editor for `bfp_weapon.cfg`(and `bfp_weapon2.cfg`) and `bfp_attacksets.cfg` files used in the ancient Quake 3 mod **Bid For Power**. Built with Flutter for cross-platform compatibility.
 
 ## Features
 
-- Edit all weapon properties in a user-friendly interface
-- Intuitive search and organization of weapons
+- Edit all weapon and attack set properties in a user-friendly interface
+- Intuitive search and organization of weapons and attack sets
 - Load and save `bfp_weapon.cfg`/`bfp_weapon2.cfg` files
+- Load and save `bfp_attacksets.cfg` files
 - Add new weapons with all required properties
+- Custom attack sets with different weapons for some player models
 - Swap weapon IDs when conflicts occur
 - Dark/Light mode support
 - Cross-platform support (Windows, Linux, macOS, Android, Web)
 
 ## Screenshots
-<img src="https://github.com/user-attachments/assets/981a961e-ff8a-489f-85a1-8e8bedf82069" width=500 />
-<img src="https://github.com/user-attachments/assets/fd761b31-7ae3-4908-a129-8a5a999397d9" width=500 />
-<img src="https://github.com/user-attachments/assets/14642fcb-4612-4ea0-a81d-08a6a4dbfc15" width=500 />
-<img src="https://github.com/user-attachments/assets/18911f48-10c4-426b-9036-a5a8d67d6acc" width=500 />
-<img src="https://github.com/user-attachments/assets/f2bd3b45-4f40-42d0-8b64-0da0d3b176d5" width=500 />
+<img src="https://github.com/user-attachments/assets/befb1e9b-ab57-4b39-b650-c53a36c268e0" width=500 />
+<img src="https://github.com/user-attachments/assets/3a97d1fd-6a4b-4b4c-b765-e8de510c7e7b" width=500 />
 
 
 ## Getting Started
@@ -54,6 +53,25 @@ flutter run
     - Set all required properties
 
 4. Save changes:
+    - Click the save icon
+    - Choose to overwrite or save a new copy
+    - For new copies, specify a filename
+
+5. Load attack sets (requires weapons loaded):
+    - Go to Attack sets tab
+    - Click the folder icon in the top-right corner
+    - Select `bfp_attacksets.cfg`
+
+6. Edit attack sets:
+    - Expand any attack set to view its properties
+    - Modify properties directly in the input and dropdown fields
+
+7. Add new attack sets (requires weapons loaded):
+    - Click the + icon in the top-right corner
+    - Fill in attack set details in the dialog
+    - Set all required properties
+
+8. Save changes:
     - Click the save icon
     - Choose to overwrite or save a new copy
     - For new copies, specify a filename
@@ -135,6 +153,25 @@ extraKnockback 0
 railTrail 0
 movementPenalty 0
 explosionSpawn 9
+
+// ...
+
+end
+```
+
+As for attack sets:
+
+`bfp_attacksets.cfg`
+
+```c
+attackset 1
+attack 0 21
+attack 1 16
+attack 2 15
+attack 3 23
+attack 4 13
+modelPrefix bfp1-
+defaultModel bfp1-kyah
 
 // ...
 

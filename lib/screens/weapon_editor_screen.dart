@@ -16,9 +16,12 @@ import 'package:file_picker/file_picker.dart';
 class WeaponEditorScreen extends StatefulWidget {
   final bool isDarkMode;
   final VoidCallback onToggleTheme;
+  final ValueChanged<List<Weapon>> onWeaponsUpdated;
+
   const WeaponEditorScreen({
     required this.isDarkMode,
     required this.onToggleTheme,
+    required this.onWeaponsUpdated,
     super.key,
   });
 
@@ -106,6 +109,7 @@ class _WeaponEditorScreenState extends State<WeaponEditorScreen> {
         setState(() {
           currentFile = path;
           weapons = parseCfg(path);
+          widget.onWeaponsUpdated(weapons);
           _initControllersForWeapons();
         });
       } else {

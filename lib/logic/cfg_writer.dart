@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bfp_weapon_cfg_flutter/models/attackset.dart';
 import 'package:bfp_weapon_cfg_flutter/models/weapon.dart';
 
 void saveCfg(String outPath, List<Weapon> weapons) {
@@ -23,5 +24,22 @@ void saveCfg(String outPath, List<Weapon> weapons) {
   }
 
   // add trailing 'end' if missing...
+  File(outPath).writeAsStringSync(out.join('\n'));
+}
+
+void saveAttackSetCfg(String outPath, List<AttackSet> attackSets) {
+  final out = <String>[];
+  
+  for (var attackSet in attackSets) {
+    out.add('attackset ${attackSet.index}');
+    for (int slot = 0; slot < 5; slot++) {
+      out.add('attack $slot ${attackSet.attacks[slot]}');
+    }
+    out.add('modelPrefix ${attackSet.modelPrefix}');
+    out.add('defaultModel ${attackSet.defaultModel}');
+    out.add(''); // Add empty line between attacksets
+  }
+
+  out.add('end');
   File(outPath).writeAsStringSync(out.join('\n'));
 }

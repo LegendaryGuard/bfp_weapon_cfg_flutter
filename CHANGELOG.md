@@ -1,3 +1,9 @@
+## 1.0.0
+
+* Complete version.
+* Implement new screen: a functional Bid For Power Attackset Config Editor.
+* Add bottom navigation bar for switching between Weapons and AttackSets.
+
 ## 0.1.2
 
 * Replace priority (0-1-2) numeric input field to dropdown.
