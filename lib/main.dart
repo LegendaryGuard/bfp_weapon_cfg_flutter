@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:bfp_weapon_cfg_flutter/models/constants.dart';
 import 'package:bfp_weapon_cfg_flutter/models/theme.dart';
 import 'package:bfp_weapon_cfg_flutter/models/weapon.dart';
 import 'package:bfp_weapon_cfg_flutter/screens/weapon_editor_screen.dart';
 import 'package:bfp_weapon_cfg_flutter/screens/attackset_editor_screen.dart';
+import 'package:bfp_weapon_cfg_flutter/widgets/weapon/weapon_property_image.dart';
 
 void main() => runApp(WeaponEditorApp());
 
@@ -51,13 +53,29 @@ class _WeaponEditorAppState extends State<WeaponEditorApp> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.bolt, color: Color(0xFFEBD300)),
+              icon: WeaponPropertyImage(
+                path: '$imgDIR/weapons.png',
+                color: const Color(0xFFFA6E06),
+              ),
+              activeIcon: WeaponPropertyImage(
+                path: '$imgDIR/weapons.png',
+                color: const Color(0xFFFA6E06),
+                enlarge: true,
+              ),
               label: 'Weapons',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_search, color: Color(0xFF3F51B5)),
+              icon: WeaponPropertyImage(
+                path: '$imgDIR/attacksets.png',
+                color: const Color(0xFF8984CB),
+              ),
+              activeIcon: WeaponPropertyImage(
+                path: '$imgDIR/attacksets.png',
+                color: const Color(0xFF8984CB),
+                enlarge: true,
+              ),
               label: 'Attack sets',
             ),
           ],

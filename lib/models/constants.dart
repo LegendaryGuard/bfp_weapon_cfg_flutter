@@ -135,3 +135,26 @@ final weaponRangeValues = {
   'explosionSpawn': RangeValues(0, 10000),
 };
 
+const double imageSIZE = 48;
+
+const String imgDIR = 'assets/img';
+const String cfgDIR = 'assets/cfg';
+
+String getPropertyIcon(String key, String? value) {
+  switch (key) {
+    case 'attackType':
+      return (attackTypes.contains(value)) ? '$imgDIR/weapon/$value.png' : '';
+    case 'multishot':
+    case 'homing':
+    case 'chargeAttack':
+    case 'chargeAutoFire':
+    case 'loopingAnim':
+    case 'noAttackAnim':
+    case 'piercing':
+    case 'railTrail':
+    case 'reflective':
+    case 'usesGravity':
+    case 'blinding': return '$imgDIR/weapon/$key.png';
+    default: return '';
+  }
+}

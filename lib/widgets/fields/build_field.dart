@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bfp_weapon_cfg_flutter/models/weapon.dart';
 import 'package:bfp_weapon_cfg_flutter/models/constants.dart';
+import 'package:bfp_weapon_cfg_flutter/widgets/weapon/weapon_property_image.dart';
 
 class BuildField extends StatefulWidget {
   final Weapon w;
@@ -82,17 +83,34 @@ class _BuildFieldState extends State<BuildField> {
 
     // AttackType dropdown
     if (widget.isAttackType) {
-      return DropdownButtonFormField<String>(
-        value: attackTypes.contains(widget.w.properties[key]) ? widget.w.properties[key] : null,
-        items: attackTypes
-            .map((t) => DropdownMenuItem(value: t, child: Text(t)))
-            .toList(),
-        onChanged: (v) => setState(() => widget.w.properties[key] = v!),
-        decoration: InputDecoration(
-          labelText: key,
-          border: const OutlineInputBorder(),
-          isDense: true,
-        ),
+      return Row(
+        children: [
+          Expanded(
+            child: DropdownButtonFormField<String>(
+              value: attackTypes.contains(widget.w.properties[key]) ? widget.w.properties[key] : null,
+              items: attackTypes
+                  .map((t) => DropdownMenuItem(
+                        value: t, 
+                        child: Row(
+                          children: [
+                            WeaponPropertyImage(
+                              path: getPropertyIcon('attackType', t),
+                              color: const Color(0xFF000034),
+                            ),
+                            Text(t),
+                          ],
+                        )
+                      )
+                    ).toList(),
+              onChanged: (v) => setState(() => widget.w.properties[key] = v!),
+              decoration: InputDecoration(
+                labelText: key,
+                border: const OutlineInputBorder(),
+                isDense: true,
+              ),
+            ),
+          ),
+        ],
       );
     }
 
@@ -101,6 +119,10 @@ class _BuildFieldState extends State<BuildField> {
       final val = widget.w.properties[key] ?? '0';
       return Row(
         children: [
+          WeaponPropertyImage(
+            path: getPropertyIcon(key, widget.w.properties[key]),
+            color: const Color(0xFF000034),
+          ),
           Text('$key (${widget.range.start.toInt()}–${widget.range.end.toInt()})'),
           const SizedBox(width: 8),
           Switch(
@@ -134,39 +156,51 @@ class _BuildFieldState extends State<BuildField> {
     }
 
     // Numeric text field
-    return TextFormField(
-      controller: _controller,
-      focusNode: _focusNode,
-      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      decoration: InputDecoration(
-        labelText: '$key (${widget.range.start.toInt()}–${widget.range.end.toInt()})',
-        border: const OutlineInputBorder(),
-        isDense: true,
-      ),
-      onFieldSubmitted: (value) {
-        final text = value.trim();
-        if (key == 'weaponNum') {
-          widget.onWeaponNumCheck(text, widget.w);
-          return;
-        }
-        
-        if (text.isEmpty) {
-          setState(() => widget.w.properties[key] = null);
-          return;
-        }
-        
-        if (isFloat) {
-          final f = double.tryParse(text);
-          if (f != null && f >= widget.range.start && f <= widget.range.end) {
-            setState(() => widget.w.properties[key] = f.toString());
-          }
-        } else {
-          final n = int.tryParse(text);
-          if (n != null && n >= widget.range.start && n <= widget.range.end) {
-            setState(() => widget.w.properties[key] = n.toString());
-          }
-        }
-      },
+    final propertyIcon = getPropertyIcon(key, '0');
+    return Row(
+      children: [
+        if (propertyIcon.isNotEmpty && propertyIcon != '')
+          WeaponPropertyImage(
+            path: propertyIcon,
+            color: const Color(0xFF000034),
+          ),
+        Expanded(
+          child: TextFormField(
+            controller: _controller,
+            focusNode: _focusNode,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            decoration: InputDecoration(
+              labelText: '$key (${widget.range.start.toInt()}–${widget.range.end.toInt()})',
+              border: const OutlineInputBorder(),
+              isDense: true,
+            ),
+            onFieldSubmitted: (value) {
+              final text = value.trim();
+              if (key == 'weaponNum') {
+                widget.onWeaponNumCheck(text, widget.w);
+                return;
+              }
+              
+              if (text.isEmpty) {
+                setState(() => widget.w.properties[key] = null);
+                return;
+              }
+              
+              if (isFloat) {
+                final f = double.tryParse(text);
+                if (f != null && f >= widget.range.start && f <= widget.range.end) {
+                  setState(() => widget.w.properties[key] = f.toString());
+                }
+              } else {
+                final n = int.tryParse(text);
+                if (n != null && n >= widget.range.start && n <= widget.range.end) {
+                  setState(() => widget.w.properties[key] = n.toString());
+                }
+              }
+            },
+          ),
+        ),
+      ],
     );
   }
 }

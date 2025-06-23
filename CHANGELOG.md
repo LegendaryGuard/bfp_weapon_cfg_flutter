@@ -1,3 +1,10 @@
+## 1.0.1
+
+* Add weapon property images in the `assets/img/` directory.
+* Display weapon property images on both editor screens.
+* Add sample `bfp_weapon.cfg` and `bfp_attacksets.cfg` files inside `assets/cfg/` directory.
+* Now tests parse cfg files inside `assets/cfg/` to verify.
+
 ## 1.0.0
 
 * Complete version.

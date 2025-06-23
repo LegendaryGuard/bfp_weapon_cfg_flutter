@@ -15,8 +15,8 @@ A modern GUI editor for `bfp_weapon.cfg`(and `bfp_weapon2.cfg`) and `bfp_attacks
 - Cross-platform support (Windows, Linux, macOS, Android, Web)
 
 ## Screenshots
-<img src="https://github.com/user-attachments/assets/befb1e9b-ab57-4b39-b650-c53a36c268e0" width=500 />
-<img src="https://github.com/user-attachments/assets/3a97d1fd-6a4b-4b4c-b765-e8de510c7e7b" width=500 />
+<img src="https://github.com/user-attachments/assets/a8c39de8-3370-45fe-ab68-35920e64fe1f" width=500 />
+<img src="https://github.com/user-attachments/assets/6d300617-d1dc-4ac1-baf7-f3181b14afbd" width=500 />
 
 
 ## Getting Started
@@ -177,3 +177,13 @@ defaultModel bfp1-kyah
 
 end
 ```
+
+### Icons and assets
+Most icons are licensed under [CC BY 3.0.](http://creativecommons.org/licenses/by/3.0/).
+Some icons are modified.
+
+Credits: 
+- Delapouite
+- Lorc
+
+Reference: https://game-icons.net/
