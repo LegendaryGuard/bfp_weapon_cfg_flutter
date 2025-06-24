@@ -56,6 +56,7 @@ const attackTypes = [
   'missile',
   'rdmissile',
   'beam',
+  'sbeam',
   'hitscan',
   'forcefield'
 ];

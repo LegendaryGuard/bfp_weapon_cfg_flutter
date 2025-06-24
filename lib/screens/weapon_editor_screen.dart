@@ -10,6 +10,7 @@ import 'package:bfp_weapon_cfg_flutter/widgets/dialogs/notification_dialog.dart'
 import 'package:bfp_weapon_cfg_flutter/widgets/dialogs/warning_dialog.dart';
 import 'package:bfp_weapon_cfg_flutter/widgets/fields/build_field.dart';
 import 'package:bfp_weapon_cfg_flutter/widgets/fields/build_labeled_field_above.dart';
+import 'package:bfp_weapon_cfg_flutter/widgets/weapon/weapon_summary_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -272,6 +273,7 @@ class _WeaponEditorScreenState extends State<WeaponEditorScreen> {
                           "(${w.name})", 
                           style: TextStyle(fontWeight: FontWeight.bold)
                         ),
+                        WeaponSummaryBar(weapon: w),
                       ],
                     )),
                     IconButton(

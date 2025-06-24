@@ -1,3 +1,8 @@
+## 1.0.2
+
+* Display weapon summary bar to every weapon dropdown in Weapon Config Editor screen.
+* Add forgotten attackType: sbeam
+
 ## 1.0.1
 
 * Add weapon property images in the `assets/img/` directory.
