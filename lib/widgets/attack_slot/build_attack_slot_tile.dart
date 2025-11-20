@@ -66,7 +66,7 @@ class BuildAttackSlotTile extends StatelessWidget {
                       ),
                     )
                   : DropdownButtonFormField<int>( 
-                      value: currentValue,
+                      initialValue: currentValue,
                       decoration: const InputDecoration(
                         labelText: 'Select weapon',
                         border: OutlineInputBorder(),

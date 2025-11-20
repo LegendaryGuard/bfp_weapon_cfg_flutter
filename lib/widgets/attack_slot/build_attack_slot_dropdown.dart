@@ -40,7 +40,7 @@ class BuildAttackSlotDropdown extends StatelessWidget {
                 onChanged: onChanged,
               )
             : DropdownButtonFormField<String>( 
-                value: controller.text,
+                initialValue: controller.text.isEmpty ? '0' : controller.text,
                 decoration: const InputDecoration(
                   labelText: 'Select weapon',
                   border: OutlineInputBorder(),

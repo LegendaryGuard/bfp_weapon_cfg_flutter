@@ -87,7 +87,7 @@ class _BuildFieldState extends State<BuildField> {
         children: [
           Expanded(
             child: DropdownButtonFormField<String>(
-              value: attackTypes.contains(widget.w.properties[key]) ? widget.w.properties[key] : null,
+              initialValue: attackTypes.contains(widget.w.properties[key]) ? widget.w.properties[key] : null,
               items: attackTypes
                   .map((t) => DropdownMenuItem(
                         value: t, 
@@ -136,11 +136,12 @@ class _BuildFieldState extends State<BuildField> {
     // Priority dropdown
     if (_isPriority) {
       return DropdownButtonFormField<int>(
-        value: int.tryParse(widget.w.properties[key] ?? '0 = none') ?? 0,
+        initialValue: int.tryParse(widget.w.properties[key] ?? '0') ?? 0,
         items: const [
           DropdownMenuItem(value: 0, child: Text('0 = none')),
-          DropdownMenuItem(value: 1, child: Text('1 = beam')),
-          DropdownMenuItem(value: 2, child: Text('2 = forcefield')),
+          DropdownMenuItem(value: 1, child: Text('1 = low')),
+          DropdownMenuItem(value: 2, child: Text('2 = medium')),
+          DropdownMenuItem(value: 3, child: Text('3 = high')),
         ],
         onChanged: (v) {
           if (v != null) {

@@ -36,7 +36,7 @@ const Map<String, String> variableDescriptions = {
   'coneOfFireY': 'Attack fire muzzle Y vector',
   'piercing': 'Enable to pierce enemy attacks',
   'reflective': 'Enable to reflect enemy attacks',
-  'priority': 'Attack priority: 2 = forcefield, 1 = beam, 0 = none',
+  'priority': 'Attack priority: 3 = high, 2 = medium, 1 = low, 0 = none',
   'blinding': 'Enable to blind enemies',
   'usesGravity': 'Enable projectile gravity',
   'extraKnockback': 'If negative, no knockback',

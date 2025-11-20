@@ -1,3 +1,10 @@
+## 1.0.3
+
+* Fix adding forgotten highest priority (3) in weapon properties.
+* Refactor priority details (0 = none, 1 = low, 2 = medium, 3 = high).
+* Change SDK environment requirements to >=3.10.0.
+* Update file_picker dependency to 10.3.6.
+
 ## 1.0.2
 
 * Display weapon summary bar to every weapon dropdown in Weapon Config Editor screen.

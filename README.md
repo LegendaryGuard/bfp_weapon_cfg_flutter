@@ -15,8 +15,8 @@ A modern GUI editor for `bfp_weapon.cfg`(and `bfp_weapon2.cfg`) and `bfp_attacks
 - Cross-platform support (Windows, Linux, macOS, Android, Web)
 
 ## Screenshots
-<img src="https://github.com/user-attachments/assets/a8c39de8-3370-45fe-ab68-35920e64fe1f" width=500 />
-<img src="https://github.com/user-attachments/assets/6d300617-d1dc-4ac1-baf7-f3181b14afbd" width=500 />
+<img src="https://github.com/user-attachments/assets/93368e6f-deea-43ac-a4f2-5705f03e5653" width=500 />
+<img src="https://github.com/user-attachments/assets/cac71fc6-010b-40ea-8b27-534041702f15" width=500 />
 
 
 ## Getting Started
