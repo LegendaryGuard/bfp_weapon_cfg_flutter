@@ -12,6 +12,7 @@ class BuildField extends StatefulWidget {
   final FocusNode? focusNode;
   final TextEditingController? controller;
   final Function(String, Weapon) onWeaponNumCheck;
+  final List<Weapon>? allWeapons;
 
   const BuildField({
     required this.w,
@@ -22,6 +23,7 @@ class BuildField extends StatefulWidget {
     this.isAttackType = false,
     this.focusNode,
     this.controller,
+    this.allWeapons,
     super.key,
   });
 
@@ -33,13 +35,11 @@ class _BuildFieldState extends State<BuildField> {
   late TextEditingController _controller;
   late FocusNode _focusNode;
   late bool _isWeaponNum;
-  late bool _isPriority;
 
   @override
   void initState() {
     super.initState();
     _isWeaponNum = widget.keyName == 'weaponNum';
-    _isPriority = widget.keyName == 'priority';
     
     // Use provided controller or create new one
     _controller = widget.controller ?? TextEditingController(
@@ -117,12 +117,14 @@ class _BuildFieldState extends State<BuildField> {
     // Boolean switch
     if (widget.isBool) {
       final val = widget.w.properties[key] ?? '0';
+      final iconPath = getPropertyIcon(key, widget.w.properties[key]);
       return Row(
         children: [
-          WeaponPropertyImage(
-            path: getPropertyIcon(key, widget.w.properties[key]),
-            color: const Color(0xFF000034),
-          ),
+          if (iconPath.isNotEmpty)
+            WeaponPropertyImage(
+              path: getPropertyIcon(key, widget.w.properties[key]),
+              color: const Color(0xFF000034),
+            ),
           Text('$key (${widget.range.start.toInt()}–${widget.range.end.toInt()})'),
           const SizedBox(width: 8),
           Switch(
@@ -133,24 +135,45 @@ class _BuildFieldState extends State<BuildField> {
       );
     }
 
-    // Priority dropdown
-    if (_isPriority) {
+    // explosionSpawn dropdown
+    if (key == 'explosionSpawn') {
+      if (widget.allWeapons == null || widget.allWeapons!.isEmpty) {
+        return TextFormField(
+          enabled: false,
+          decoration: const InputDecoration(
+            labelText: 'explosionSpawn',
+            border: OutlineInputBorder(),
+            isDense: true,
+          ),
+          initialValue: widget.w.properties[key] ?? '',
+        );
+      }
+
+      // adding NONE first
+      final items = <DropdownMenuItem<int>>[
+        const DropdownMenuItem<int>(value: 0, child: Text('NONE')),
+        ...widget.allWeapons!
+            .where((w) => w.weaponNum != null && w.weaponNum != 0) // exclude 0
+            .map((w) => DropdownMenuItem<int>(
+                  value: w.weaponNum!,
+                  child: Text('${w.weaponNum} (${w.name})'),
+                ))
+      ];
+
+      final currentValue = int.tryParse(widget.w.properties[key] ?? '');
+      final selectedValue = (currentValue == null || currentValue == 0) ? 0 : currentValue;
+
       return DropdownButtonFormField<int>(
-        initialValue: int.tryParse(widget.w.properties[key] ?? '0') ?? 0,
-        items: const [
-          DropdownMenuItem(value: 0, child: Text('0 = none')),
-          DropdownMenuItem(value: 1, child: Text('1 = low')),
-          DropdownMenuItem(value: 2, child: Text('2 = medium')),
-          DropdownMenuItem(value: 3, child: Text('3 = high')),
-        ],
-        onChanged: (v) {
-          if (v != null) {
-            setState(() => widget.w.properties[key] = v.toString());
-          }
+        initialValue: selectedValue,
+        items: items,
+        onChanged: (newValue) {
+          setState(() {
+            widget.w.properties[key] = newValue?.toString() ?? '0';
+          });
         },
-        decoration: InputDecoration(
-          labelText: key,
-          border: const OutlineInputBorder(),
+        decoration: const InputDecoration(
+          labelText: 'explosionSpawn (weaponNum)',
+          border: OutlineInputBorder(),
           isDense: true,
         ),
       );

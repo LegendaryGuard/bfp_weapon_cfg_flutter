@@ -12,21 +12,21 @@ const Map<String, String> variableDescriptions = {
   'chargeAutoFire': 'Enable auto-fire even while charging',
   'minCharge': 'Minimum charge points',
   'maxCharge': 'Maximum charge points',
-  'damage': 'Attack (projectile) damage',
+  'damage': 'Projectile damage',
   'splashDamage': 'Splash attack damage',
   'chargeDamageMult': 'Attack damage multiplier by charge points',
   'maxDamage': 'Maximum attack damage',
-  'radius': 'Attack (projectile) radius',
+  'radius': 'Projectile radius',
   'explosionRadius': 'Explosion radius',
   'chargeRadiusMult': 'Radius multiplier by charge points',
   'chargeExpRadiusMult': 'Explosion radius multiplier by charge points',
-  'maxRadius': 'Maximum attack (projectile) radius',
+  'maxRadius': 'Maximum projectile radius',
   'maxExpRadius': 'Maximum explosion radius',
-  'missileSpeed': 'Attack (projectile) speed',
-  'homing': 'Homing factor (float), 0 = no homing',
-  'homingRange': 'Homing range (float)',
+  'missileSpeed': 'Projectile speed',
+  'homing': 'Homing factor (float), 0 or less = no homing',
+  'homingRange': 'Homing range (float), 0 or less = no homing',
   'homingAcceleration': 'Homing acceleration (float)',
-  'range': 'Attack (projectile) range',
+  'range': 'Projectile range (for hitscan weapons)',
   'loopingAnim': 'Enable animation loop',
   'noAttackAnim': 'Enable no attack strike animation',
   'alternatingXOffset': 'Alternative X offset of the attack',
@@ -35,21 +35,21 @@ const Map<String, String> variableDescriptions = {
   'coneOfFireX': 'Attack fire muzzle X vector',
   'coneOfFireY': 'Attack fire muzzle Y vector',
   'piercing': 'Enable to pierce enemy attacks',
-  'reflective': 'Enable to reflect enemy attacks',
-  'priority': 'Attack priority: 3 = high, 2 = medium, 1 = low, 0 = none',
-  'blinding': 'Enable to blind enemies',
-  'usesGravity': 'Enable projectile gravity',
-  'extraKnockback': 'If negative, no knockback',
-  'railTrail': 'Enable rail trail instant attack',
-  'movementPenalty': 'Stun duration in seconds after attack',
-  'missileGravity': 'Attack (projectile) gravity factor, 0 = no gravity',
-  'missileAcceleration': 'Projectile acceleration (float), lesser than 1 = deceleration',
-  'multishot': 'Attack shots quantity, 0 = one shot',
-  'bounces': 'Number of projectile bounces on solid',
+  'reflective': 'Enable to reflect enemy attacks (for hitscan weapons)',
+  'priority': 'Projectile priority, if higher than the other one, the other one breaks/explodes/disappears',
+  'blinding': 'Enable to blind enemies (original BFP: only works on forcefield weapons)',
+  'usesGravity': 'Enable projectile gravity (original BFP: unused option)',
+  'extraKnockback': 'Extra knockback factor, if negative, less knockback',
+  'railTrail': 'Enable rail trail instant attack (for hitscan weapons)',
+  'movementPenalty': 'Stun duration in seconds after attacking',
+  'missileGravity': 'Projectile gravity factor, 0 or less = no gravity',
+  'missileAcceleration': 'Projectile acceleration (float), lesser than 1 until 0.0001 = deceleration',
+  'multishot': 'Attack shots quantity, 0, less or 1 = one shot',
+  'bounces': 'Enable projectile bouncing',
   'bounceFriction': 'Bounce friction (float)',
-  'noZBounce': 'Vertical bounce damping factor (float)',
+  'noZBounce': 'Enable vertical bouncing (bounces continuously at the same altitude without fall decrease)',
   'missileDuration': 'Projectile duration in milliseconds',
-  'explosionSpawn': 'Number of spawned explosion projectiles',
+  'explosionSpawn': 'Weapon id number to spawn projectiles (for rdmissile weapons)',
 };
 
 const attackTypes = [
@@ -69,7 +69,6 @@ const floatWeaponKeys = {
   'homingAcceleration',
   'missileAcceleration',
   'bounceFriction',
-  'noZBounce',
 };
 
 final boolWeaponKeysArr = [
@@ -82,6 +81,8 @@ final boolWeaponKeysArr = [
   'railTrail',
   'noAttackAnim',
   'chargeAutoFire',
+  'bounces',
+  'noZBounce',
 ];
 
 final weaponRangeValues = {
@@ -120,7 +121,7 @@ final weaponRangeValues = {
   'coneOfFireY': RangeValues(0, 100000),
   'piercing': RangeValues(0, 1),
   'reflective': RangeValues(0, 1),
-  'priority': RangeValues(0, 2),
+  'priority': RangeValues(0, 10000),
   'blinding': RangeValues(0, 1),
   'usesGravity': RangeValues(0, 1),
   'extraKnockback': RangeValues(-1000, 1000),
@@ -129,11 +130,11 @@ final weaponRangeValues = {
   'missileGravity': RangeValues(-10000, 10000),
   'missileAcceleration': RangeValues(0, 10000),
   'multishot': RangeValues(0, 10000),
-  'bounces': RangeValues(0, 10000),
+  'bounces': RangeValues(0, 1),
   'bounceFriction': RangeValues(0, 10000),
-  'noZBounce': RangeValues(0, 100000),
+  'noZBounce': RangeValues(0, 1),
   'missileDuration': RangeValues(0, 100000),
-  'explosionSpawn': RangeValues(0, 10000),
+  'explosionSpawn': RangeValues(0, 32767),
 };
 
 const double imageSIZE = 48;
@@ -154,7 +155,7 @@ String getPropertyIcon(String key, String? value) {
     case 'piercing':
     case 'railTrail':
     case 'reflective':
-    case 'usesGravity':
+    case 'missileGravity':
     case 'blinding': return '$imgDIR/weapon/$key.png';
     default: return '';
   }

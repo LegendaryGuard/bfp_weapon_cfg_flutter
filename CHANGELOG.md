@@ -1,3 +1,9 @@
+## 1.0.4
+
+* Change weapon variable types correctly: priority, bounces, noZBounce and explosionSpawn.
+* Refactor some weapon description details.
+* Fix weapon icon not displaying when being empty in the config list.
+
 ## 1.0.3
 
 * Fix adding forgotten highest priority (3) in weapon properties.

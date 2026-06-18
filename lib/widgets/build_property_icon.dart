@@ -40,7 +40,7 @@ class _BuildPropertyIconState extends State<BuildPropertyIcon> {
       keyNameMsg = value;
     }
 
-    if (iconPath.isEmpty && iconPath != '') return const SizedBox.shrink();
+    if (iconPath.isEmpty) return const SizedBox.shrink();
     
     return Tooltip(
       message: keyNameMsg,

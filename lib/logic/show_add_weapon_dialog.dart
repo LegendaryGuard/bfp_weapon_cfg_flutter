@@ -90,6 +90,7 @@ Future<void> showAddWeaponDialog({
                                 });
                               }
                             },
+                            allWeapons: weapons,
                           ),
                           isDarkMode: isDarkMode,
                         ),

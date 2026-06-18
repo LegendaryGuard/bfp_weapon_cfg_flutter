@@ -15,6 +15,7 @@ class WeaponPropertyImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (path.isEmpty) return const SizedBox.shrink();
     final imgSize = (enlarge == true) ? imageSIZE * 1.4 : imageSIZE;
     return Image.asset(
       path,
