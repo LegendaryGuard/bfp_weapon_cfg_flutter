@@ -371,6 +371,7 @@ class _WeaponEditorScreenState extends State<WeaponEditorScreen> {
                           focusNode: key == 'weaponNum' 
                               ? weaponNumFocusNodes[w]
                               : null,
+                          allWeapons: weapons,
                           onWeaponNumCheck: (value, weapon) => checkWeaponNum(
                             context: context,
                             weapons: weapons,
