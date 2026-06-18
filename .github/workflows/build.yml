@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout source
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       
     - name: Install Linux dependencies
       if: matrix.os == 'ubuntu-latest'
@@ -26,7 +26,7 @@ jobs:
         cache: true
     
     - name: Cache Flutter dependencies
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: |
           ~/.pub-cache
@@ -58,7 +58,7 @@ jobs:
       
     - name: Upload Windows release
       if: matrix.os == 'windows-latest'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: windows-release
         path: windows_release.zip
@@ -78,7 +78,7 @@ jobs:
       
     - name: Upload Linux bundle
       if: matrix.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: linux-release
         path: linux_release.tar.gz
@@ -102,7 +102,7 @@ jobs:
       
     - name: Upload Web build
       if: matrix.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: web-release
         path: web_release.zip
@@ -115,7 +115,7 @@ jobs:
 
     - name: Upload Android APK
       if: matrix.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: android-apk
         path: build/app/outputs/flutter-apk/app-release.apk
@@ -135,7 +135,7 @@ jobs:
       
     - name: Upload macOS release
       if: matrix.os == 'macos-latest'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: macos-release
         path: macos_release.zip
