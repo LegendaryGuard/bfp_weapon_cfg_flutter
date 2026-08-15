@@ -5,7 +5,7 @@ const Map<String, String> variableDescriptions = {
   'attackType': 'Type of attack',
   'weaponTime': 'Weapon time in milliseconds',
   'randomWeaponTime': 'Random weapon time in milliseconds',
-  'kiCostAsPct': 'Ki attack percentage cost (float)',
+  'kiCostAsPct': 'Enable ki attack percentage cost',
   'kiPct': 'Ki attack percentage (float)',
   'kiCost': 'Ki attack cost',
   'chargeAttack': 'Enable charge attack',
@@ -62,7 +62,6 @@ const attackTypes = [
 ];
 
 const floatWeaponKeys = {
-  'kiCostAsPct',
   'kiPct',
   'homing',
   'homingRange',
@@ -72,6 +71,7 @@ const floatWeaponKeys = {
 };
 
 final boolWeaponKeysArr = [
+  'kiCostAsPct',
   'chargeAttack',
   'loopingAnim',
   'piercing',
@@ -90,7 +90,7 @@ final weaponRangeValues = {
   'attackType': RangeValues(0, 0),
   'weaponTime': RangeValues(0, 100000),
   'randomWeaponTime': RangeValues(0, 100000),
-  'kiCostAsPct': RangeValues(0, 100),
+  'kiCostAsPct': RangeValues(0, 1),
   'kiPct': RangeValues(0, 100),
   'kiCost': RangeValues(0, 10000),
   'chargeAttack': RangeValues(0, 1),

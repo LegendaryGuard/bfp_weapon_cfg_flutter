@@ -1,3 +1,8 @@
+## 1.0.5
+
+* Add `.fvm` on `.gitignore`.
+* Set kiPct property as boolean type.
+
 ## 1.0.4
 
 * Change weapon variable types correctly: priority, bounces, noZBounce and explosionSpawn.

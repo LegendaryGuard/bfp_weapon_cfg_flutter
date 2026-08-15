@@ -380,6 +380,7 @@ class _WeaponEditorScreenState extends State<WeaponEditorScreen> {
                             weaponNumController: weaponNumControllers[w],
                             setStateCallback: (fn) => setState(fn),
                           ),
+                          onPropertyChanged: (key) => setState(() {}),
                         ),
                         isDarkMode: widget.isDarkMode,
                       ),

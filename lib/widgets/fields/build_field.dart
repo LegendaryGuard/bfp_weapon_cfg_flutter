@@ -13,6 +13,7 @@ class BuildField extends StatefulWidget {
   final TextEditingController? controller;
   final Function(String, Weapon) onWeaponNumCheck;
   final List<Weapon>? allWeapons;
+  final ValueChanged<String>? onPropertyChanged;
 
   const BuildField({
     required this.w,
@@ -24,6 +25,7 @@ class BuildField extends StatefulWidget {
     this.focusNode,
     this.controller,
     this.allWeapons,
+    this.onPropertyChanged,
     super.key,
   });
 
@@ -129,7 +131,10 @@ class _BuildFieldState extends State<BuildField> {
           const SizedBox(width: 8),
           Switch(
             value: val == '1',
-            onChanged: (b) => setState(() => widget.w.properties[key] = b ? '1' : '0'),
+            onChanged: (b) {
+              setState(() => widget.w.properties[key] = b ? '1' : '0');
+              widget.onPropertyChanged?.call(key);
+            },
           ),
         ],
       );
@@ -181,6 +186,10 @@ class _BuildFieldState extends State<BuildField> {
 
     // Numeric text field
     final propertyIcon = getPropertyIcon(key, '0');
+    bool isEnabled = true;
+    if (key == 'kiPct') {
+      isEnabled = widget.w.properties['kiCostAsPct'] == '1';
+    }
     return Row(
       children: [
         if (propertyIcon.isNotEmpty && propertyIcon != '')
@@ -190,6 +199,7 @@ class _BuildFieldState extends State<BuildField> {
           ),
         Expanded(
           child: TextFormField(
+            enabled: isEnabled,
             controller: _controller,
             focusNode: _focusNode,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -199,6 +209,8 @@ class _BuildFieldState extends State<BuildField> {
               isDense: true,
             ),
             onFieldSubmitted: (value) {
+              widget.onPropertyChanged?.call(key);
+
               final text = value.trim();
               if (key == 'weaponNum') {
                 widget.onWeaponNumCheck(text, widget.w);
